@@ -29,14 +29,19 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int) {
     RegisterClass(&wc);
 
     // Create main window
-    hwnd = CreateWindow( 
+    hwnd = CreateWindowEx(WS_EX_LAYERED,
         "GLSample", "OpenGL Desktop Drawing",
-        WS_POPUP,
-        0, 0, GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN),
+        WS_VISIBLE | WS_POPUP,
+        100, 100, 600, 400,
         NULL, NULL, hInstance, NULL);
+
+    SetLayeredWindowAttributes(hwnd, RGB(0, 0, 0), 0, LWA_COLORKEY);
 
     // Enable OpenGL for the window
     EnableOpenGL(hwnd, &hDC, &hGLRenderCtx);
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     // Main loop
     while (!quit) {
@@ -72,8 +77,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int) {
 }
 
 void Render() {
-    glClearColor(1.0f, 1.0f, 0.0f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
     glBegin(GL_TRIANGLES);
     glColor3f(1.0f, 0.0f, 0.0f);
