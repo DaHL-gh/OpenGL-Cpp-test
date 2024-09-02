@@ -1,0 +1,1 @@
+clang main.cpp Libraries/*.lib -o "OpenGL Sample.exe"
